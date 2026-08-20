@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 320" width="1200" height="320" role="img" aria-label="FlowDesk — AI-Powered Project Intake Engine">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0B1120"/>
+      <stop offset="1" stop-color="#070B14"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.85" cy="0.15" r="0.7">
+      <stop offset="0" stop-color="#8B5CF6" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#8B5CF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="320" fill="url(#bg)"/>
+  <rect width="1200" height="320" fill="url(#glow)"/>
+  <g stroke="#1E293B" stroke-width="1" opacity="0.5">
+    <path d="M0 80 H1200 M0 160 H1200 M0 240 H1200 M120 0 V320 M240 0 V320 M360 0 V320 M480 0 V320 M600 0 V320 M720 0 V320 M840 0 V320 M960 0 V320 M1080 0 V320"/>
+  </g>
+  <rect x="0" y="0" width="10" height="320" fill="url(#bar)"/>
+  <circle cx="60" cy="60" r="26" fill="none" stroke="#8B5CF6" stroke-width="3" opacity="0.9"/>
+  <circle cx="60" cy="60" r="10" fill="#8B5CF6"/>
+  <text x="110" y="70" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="15" fill="#8FA3BF" letter-spacing="3">PRODUCTION-GRADE AUTOMATION</text>
+  <text x="110" y="150" font-family="Arial,Helvetica,sans-serif" font-size="58" font-weight="900" fill="#E6EDF7">FlowDesk</text>
+  <text x="112" y="192" font-family="Arial,Helvetica,sans-serif" font-size="22" fill="#8FA3BF">AI-Powered Project Intake Engine</text>
+  <rect x="110" y="216" width="180" height="30" rx="15" fill="#8B5CF6" opacity="0.16" stroke="#8B5CF6" stroke-width="1.4"/>
+  <text x="200" y="236" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" fill="#8B5CF6">● Delivered to client</text>
+  <g font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13">
+    <defs><marker id="arr" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#8FA3BF"/></marker></defs>
+    <rect x="110" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="185.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">Slack</text>
+    <path d="M260 270 H286" stroke="#8FA3BF" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="286" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="361.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">AI Triage</text>
+    <path d="M436 270 H462" stroke="#8FA3BF" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="462" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="537.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">Failsafe</text>
+    <path d="M612 270 H638" stroke="#8FA3BF" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="638" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="713.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">Redis</text>
+    <path d="M788 270 H814" stroke="#8FA3BF" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="814" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="889.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">SLA</text>
+    <path d="M964 270 H990" stroke="#8FA3BF" stroke-width="2" marker-end="url(#arr)"/>
+    <rect x="990" y="250" width="150" height="40" rx="10" fill="#8B5CF6" opacity="0.10" stroke="#8B5CF6" stroke-width="1.4"/>
+    <text x="1065.0" y="275" text-anchor="middle" fill="#E6EDF7" font-weight="700">Audit</text>
+  </g>
+</svg>

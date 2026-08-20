@@ -1,0 +1,13 @@
+# Environment & Secrets
+.env
+.env.local
+*.key
+credentials.json
+
+# n8n exports (proprietary - not published)
+*.workflow.json
+/private/
+
+# OS
+.DS_Store
+Thumbs.db
