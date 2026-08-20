@@ -1,6 +1,6 @@
 # Notice
 
-This repository documents an automation system built for **Edugrow.sg** (M&A Advisory) by **Saad / ScaleWithAIBD**.
+This repository documents an automation system built for **Edugrow.sg** (M&A Advisory) by **Sayad / Sayad**.
 
 - The workflow file in `/workflows` is a **sanitized skeleton** for demonstration purposes only.
 - All client credentials, API keys, business data, and proprietary business logic have been **removed or replaced with placeholders**.
