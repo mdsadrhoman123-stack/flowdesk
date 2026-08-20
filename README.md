@@ -1,3 +1,8 @@
+<div align="center">
+  <img src="assets/banner.svg" width="100%" alt="⚡ FlowDesk — Enterprise Intake & Lifecycle System — banner"/>
+</div>
+
+
 # ⚡ FlowDesk — Enterprise Intake & Lifecycle System
 > AI-powered project intake engine — turns raw Slack requests into tracked, assigned work.
 
