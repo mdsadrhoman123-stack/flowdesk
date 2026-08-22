@@ -13,7 +13,7 @@
 <img src="assets/banners/enterprise-banner.svg" alt="Enterprise Intake Automation" width="1200" style="border-radius: 10px; margin: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
 
 <!-- Interactive Architecture Diagram -->
-[ðŸ”— View Interactive Architecture Diagram](assets/diagrams/enterprise-interactive.html)
+[View Interactive Architecture Diagram](assets/diagrams/enterprise-interactive.html)
 
 ---
 
@@ -291,14 +291,14 @@ A: This is a production system (v5.1) handling enterprise-scale request volumes.
 
 **K MD SAYAD RAHMAN** - Sayad.dev | AI Automation
 
-**ðŸ“§ Work Email:** khandokarsayad@gmail.com  
-**ðŸ“§ Personal Email:** mdsadrhoman123@gmail.com  
-**ðŸ’¼ LinkedIn:** https://linkedin.com/in/khandokarsabbir  
-**ðŸ™ GitHub:** https://github.com/mdsadrhoman123-stack
+**Work Email:** khandokarsayad@gmail.com  
+**Personal Email:** mdsadrhoman123@gmail.com  
+**LinkedIn:** https://linkedin.com/in/khandokarsabbir  
+**GitHub:** https://github.com/mdsadrhoman123-stack
 
-**ðŸš€ Open to Work - Accepting New Automation Projects**
+**Open to Work - Accepting New Automation Projects**
 
-**ðŸ“© Email me with your automation challenge - I'll tell you exactly 
+**Email me with your automation challenge - I'll tell you exactly 
 which part I'd automate first, and which part I wouldn't.**
 
 ---
@@ -316,7 +316,7 @@ which part I'd automate first, and which part I wouldn't.**
 
 **Built by K MD SAYAD RAHMAN (Sayad.dev | AI Automation)**
 
-**ðŸ“§ Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com
+**Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com
 
 Copyright (c) 2024 K MD SAYAD RAHMAN. All rights reserved. Portfolio use only.
 
