@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M&A Deal-Flow Automation - Interactive Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .node {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .node:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .node.active {
+            background: rgba(155,89,182,0.3);
+            border-color: #9B59B6;
+        }
+        
+        .node-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .node-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .node-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .details-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flow-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(155,89,182,0.3);
+            border-color: #9B59B6;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-animation {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ðŸ¤ M&A Deal-Flow Automation Architecture</h1>
+        
+        <div class="architecture-diagram">
+            <div class="node" data-node="deal-sourcing">
+                <div class="node-icon">ðŸ”</div>
+                <div class="node-title">Deal Sourcing</div>
+                <div class="node-description">Company Databases, Market Data</div>
+            </div>
+            
+            <div class="node" data-node="ai-analysis">
+                <div class="node-icon">ðŸ§ </div>
+                <div class="node-title">AI Analysis</div>
+                <div class="node-description">Claude AI Due Diligence</div>
+            </div>
+            
+            <div class="node" data-node="scoring">
+                <div class="node-icon">ðŸ“Š</div>
+                <div class="node-title">Deal Scoring</div>
+                <div class="node-description">Financial & Strategic Fit</div>
+            </div>
+            
+            <div class="node" data-node="workflow">
+                <div class="node-icon">âš™ï¸</div>
+                <div class="node-title">Workflow</div>
+                <div class="node-description">n8n Process Automation</div>
+            </div>
+            
+            <div class="node" data-node="reporting">
+                <div class="node-icon">ðŸ“‹</div>
+                <div class="node-title">Reporting</div>
+                <div class="node-description">Investment Memos & Alerts</div>
+            </div>
+        </div>
+        
+        <div class="flow-animation">
+            <div class="flow-step">Company Identification</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">AI Due Diligence</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Deal Scoring</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Investor Matching</div>
+        </div>
+        
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Node Details</h3>
+            <p id="details-content">Click on a node to see more details</p>
+        </div>
+    </div>
+    
+    <script>
+        const nodes = document.querySelectorAll('.node');
+        const detailsPanel = document.getElementById('details-panel');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsContent = document.getElementById('details-content');
+        
+        const nodeDetails = {
+            'deal-sourcing': {
+                title: 'Deal Sourcing',
+                content: 'Aggregates company data from multiple sources including business databases, financial filings, market research, and industry reports. Identifies potential acquisition targets based on predefined criteria.'
+            },
+            'ai-analysis': {
+                title: 'AI Analysis',
+                content: 'Claude AI performs comprehensive due diligence including financial analysis, market positioning, competitive landscape, and risk assessment. Generates detailed investment recommendations.'
+            },
+            'scoring': {
+                title: 'Deal Scoring',
+                content: 'Multi-dimensional scoring system evaluates financial health, strategic fit, market potential, and risk factors. Prioritizes deals based on investment criteria and portfolio alignment.'
+            },
+            'workflow': {
+                title: 'Workflow',
+                content: 'n8n automation orchestrates the entire deal flow process - from initial sourcing to final closing. Handles stakeholder notifications, document management, and process tracking.'
+            },
+            'reporting': {
+                title: 'Reporting',
+                content: 'Generates comprehensive investment memos, executive summaries, and real-time alerts. Provides dashboards for deal pipeline visibility and performance tracking.'
+            }
+        };
+        
+        nodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = this.getAttribute('data-node');
+                const details = nodeDetails[nodeId];
+                
+                nodes.forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                detailsTitle.textContent = details.title;
+                detailsContent.textContent = details.content;
+                detailsPanel.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
