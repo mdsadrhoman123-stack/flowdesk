@@ -1,0 +1,77 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="financeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00695c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#004d40;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="financeGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#financeGradient)"/>
+  <rect width="1200" height="630" fill="url(#financeGrid)"/>
+  
+  <!-- Finance/Chart Icon -->
+  <g transform="translate(60, 80)">
+    <rect x="0" y="100" width="40" height="150" fill="rgba(255,255,255,0.3)"/>
+    <rect x="50" y="50" width="40" height="200" fill="rgba(255,255,255,0.5)"/>
+    <rect x="100" y="80" width="40" height="170" fill="rgba(255,255,255,0.4)"/>
+    <rect x="150" y="20" width="40" height="230" fill="rgba(255,255,255,0.7)"/>
+    <line x1="0" y1="250" x2="200" y2="250" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+  </g>
+  
+  <!-- Payment Reconciliation Flow -->
+  <g transform="translate(50, 380)">
+    <circle cx="50" cy="50" r="30" fill="#4caf50" opacity="0.8"/>
+    <text x="50" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">$</text>
+    
+    <line x1="80" y1="50" x2="150" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    
+    <circle cx="180" cy="50" r="30" fill="#2196f3" opacity="0.8"/>
+    <text x="180" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">MATCH</text>
+    
+    <line x1="210" y1="50" x2="280" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    
+    <circle cx="310" cy="50" r="30" fill="#ff9800" opacity="0.8"/>
+    <text x="310" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">RECON</text>
+  </g>
+  
+  <!-- Text Content -->
+  <text x="500" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">
+    Payment Reconciliation Automation
+  </text>
+  <text x="500" y="230" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)">
+    Intelligent Financial Reconciliation System
+  </text>
+  <text x="500" y="280" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.7)">
+    Automate payment matching and reconciliation with AI
+  </text>
+  
+  <!-- Tech Stack -->
+  <g transform="translate(500, 350)">
+    <rect x="0" y="0" width="100" height="40" rx="5" fill="rgba(255,87,34,0.8)"/>
+    <text x="50" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">n8n</text>
+    
+    <rect x="120" y="0" width="100" height="40" rx="5" fill="rgba(33,150,243,0.8)"/>
+    <text x="170" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">PostgreSQL</text>
+    
+    <rect x="240" y="0" width="100" height="40" rx="5" fill="rgba(156,39,176,0.8)"/>
+    <text x="290" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Stripe</text>
+  </g>
+  
+  <!-- Results -->
+  <g transform="translate(500, 420)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.8)">
+      <tspan x="0" dy="0">âœ“ 99.9% Reconciliation Accuracy</tspan>
+      <tspan x="0" dy="25">âœ“ 10x Faster Processing</tspan>
+      <tspan x="0" dy="25">âœ“ 85% Manual Work Eliminated</tspan>
+    </text>
+  </g>
+  
+  <!-- Branding -->
+  <text x="1150" y="610" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.6)">
+    Built by K MD SAYAD RAHMAN | Sayad.dev
+  </text>
+</svg>
