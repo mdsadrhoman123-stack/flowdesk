@@ -1,12 +1,5 @@
 # Enterprise Teams: Automate Client Intake Without Single Points of Failure
 
-![Status](https://img.shields.io/badge/status-Delivered_to_Client-success) 
-![License](https://img.shields.io/badge/license-Portfolio_Use_Only-red) 
-![Industry](https://img.shields.io/badge/Industry-Enterprise-blue)
-![n8n Automation](https://img.shields.io/badge/n8n-Automation_EA4B71)
-![Triple AI Failsafe](https://img.shields.io/badge/Failsafe-Triple_AI-purple)
-![Validate](https://img.shields.io/badge/CI-Validating-brightgreen)
-
 **Client:** Enterprise Service Team | **Industry:** Enterprise | **Delivered by:** K MD SAYAD RAHMAN (Sayad.dev | AI Automation)
 
 <!-- Professional Banner -->
@@ -14,40 +7,6 @@
 
 <!-- Interactive Architecture Diagram -->
 [View Interactive Architecture Diagram](https://raw.githubusercontent.com/mdsadrhoman123-stack/flowdesk/main/assets/diagrams/enterprise-interactive.html)
-
----
-
-## Automation Portfolio by K MD SAYAD RAHMAN
-
-Explore my AI automation systems across different industries
-
-### Real Estate AI Automation
-[distressed-property-detection](https://github.com/mdsadrhoman123-stack/distressed-property-detection) - Property deal detection
-
-### M&A Deal-Flow Automation
-[edugrow-ma-platform](https://github.com/mdsadrhoman123-stack/edugrow-ma-platform) - M&A advisory systems
-
-### Solar CRM Automation
-[irish-solar-crm](https://github.com/mdsadrhoman123-stack/irish-solar-crm) - Field service business systems
-
-### Healthcare Document Automation
-[medical-document-automation](https://github.com/mdsadrhoman123-stack/medical-document-automation) - Medical records processing
-
-### E-commerce Review Automation
-[review-outreach-pipeline](https://github.com/mdsadrhoman123-stack/review-outreach-pipeline) - Customer review generation
-
-### Payment Reconciliation Automation
-[paybridge](https://github.com/mdsadrhoman123-stack/paybridge) - Finance automation
-
-### Review Management Automation
-[reviewshield-ai](https://github.com/mdsadrhoman123-stack/reviewshield-ai) - Reputation management
-
-### Executive Report Automation
-[-impact-report-dashboard](https://github.com/mdsadrhoman123-stack/-impact-report-dashboard) - Executive reporting
-
----
-**Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com  
-**LinkedIn:** [linkedin.com/in/khandokarsabbir](https://linkedin.com/in/khandokarsabbir)
 
 ---
 
@@ -91,7 +50,7 @@ FlowDesk automates the entire intake lifecycle - from message to assigned task -
 
 **Core capabilities:**
 - **Slack-native intake:** Captures requests directly from team channels, no new tool to learn
-- **Triple-AI failsafe:** GPT-4 â†’ Claude â†’ Regex cascade, pipeline cannot die with provider outage
+- **Triple-AI failsafe:** GPT-4 → Claude → Regex cascade, pipeline cannot die with provider outage
 - **Sub-millisecond capacity scoring:** Redis-backed atomic workload tracking, always knows who has bandwidth
 - **Proactive SLA escalation:** Watchers fire before deadlines, not after
 - **Full audit trail:** Every decision logged to PostgreSQL with correlation IDs
@@ -131,7 +90,7 @@ flowchart TD
 
 **Data Flow:**
 1. **Capture:** Slack webhook captures requests instantly from team channels
-2. **Classify:** Triple-AI cascade (GPT-4 â†’ Claude â†’ Regex) ensures 100% uptime
+2. **Classify:** Triple-AI cascade (GPT-4 → Claude → Regex) ensures 100% uptime
 3. **Score:** Redis provides sub-millisecond capacity scoring for optimal assignment
 4. **Assign:** Work auto-assigned to best-fit person based on real-time capacity
 5. **Monitor:** SLA watchers proactively escalate before deadlines slip
@@ -172,8 +131,8 @@ flowchart TD
 | :--- | :--- |
 | Workflow Nodes | 92 |
 | Active Connections | 70 |
-| AI Redundancy | 3x (GPT-4 â†’ Claude â†’ Regex) |
-| Major Versions | 5 (v1.0 â†’ v5.1) |
+| AI Redundancy | 3x (GPT-4 → Claude → Regex) |
+| Major Versions | 5 (v1.0 → v5.1) |
 | Classification Success | 99.2% (GPT-4 alone) |
 | Capacity Lookup | 0.3ms (Redis atomic) |
 | Audit Coverage | 100% |
@@ -185,33 +144,33 @@ flowchart TD
 ### BEFORE (Manual Triage - High Risk)
 ```
 [Slack Request Received] 
-    â†“ (buried in threads)
+    ↓ (buried in threads)
 [Manual Discovery] 
-    â†“ (hours delay)
+    ↓ (hours delay)
 [Human Triage] 
-    â†“ (inconsistent)
+    ↓ (inconsistent)
 [Manual Assignment] 
-    â†“ (guessing capacity)
+    ↓ (guessing capacity)
 [No SLA Tracking] 
-    â†“
-= **Missed work, delayed responses, no accountability** âŒ
+    ↓
+= **Missed work, delayed responses, no accountability** ❌
 ```
 
 ### AFTER (Automated Intake - Resilient)
 ```
 [Slack Request Received] 
-    â†“ (instant webhook capture)
+    ↓ (instant webhook capture)
 [Triple-AI Classification] 
-    â†“ (99.2% success rate)
+    ↓ (99.2% success rate)
 [Redis Capacity Scoring] 
-    â†“ (sub-millisecond)
+    ↓ (sub-millisecond)
 [Auto-Assignment] 
-    â†“ (optimal matching)
+    ↓ (optimal matching)
 [Proactive SLA Monitoring] 
-    â†“ (before deadlines)
+    ↓ (before deadlines)
 [Full Audit Trail] 
-    â†“
-= **Instant triage, optimal assignment, zero single points of failure** âœ…
+    ↓
+= **Instant triage, optimal assignment, zero single points of failure** ✅
 ```
 
 **The difference:** Automated intake with triple-AI failsafe ensures system never goes down, even during provider outages.
@@ -234,7 +193,7 @@ flowchart TD
 ## Non-functional Highlights
 
 **Reliability & Error Handling:**
-- **Triple-AI Failsafe:** GPT-4 â†’ Claude â†’ Regex cascade ensures 100% uptime
+- **Triple-AI Failsafe:** GPT-4 → Claude → Regex cascade ensures 100% uptime
 - **No Silent Failures:** Every error triggers alarms and fallback activation
 - **Retry Logic:** Exponential backoff on every external call
 - **Idempotent Processing:** No double-counting or duplicate runs
@@ -256,11 +215,11 @@ flowchart TD
 ## Design Decisions
 
 **Why This Architecture:**
-- **Triple-AI Failsafe:** Single provider outage caused 40min downtime â†’ unacceptable
-- **Redis Capacity Scoring:** Manual assignment was bottleneck â†’ real-time tracking needed
-- **Proactive SLA Monitoring:** Reactive escalation too late â†’ prevent vs fix
-- **Slack-Native:** No new tool adoption â†’ meets teams where they work
-- **Full Audit Trail:** Enterprise compliance requirements â†’ 100% logging
+- **Triple-AI Failsafe:** Single provider outage caused 40min downtime → unacceptable
+- **Redis Capacity Scoring:** Manual assignment was bottleneck → real-time tracking needed
+- **Proactive SLA Monitoring:** Reactive escalation too late → prevent vs fix
+- **Slack-Native:** No new tool adoption → meets teams where they work
+- **Full Audit Trail:** Enterprise compliance requirements → 100% logging
 
 **Trade-offs:**
 - **Complexity vs Reliability:** 92 nodes add complexity but ensure zero downtime
