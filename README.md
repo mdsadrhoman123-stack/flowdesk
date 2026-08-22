@@ -17,32 +17,32 @@
 
 ---
 
-## ðŸš€ Automation Portfolio by K MD SAYAD RAHMAN
+## Automation Portfolio by K MD SAYAD RAHMAN
 
 Explore my AI automation systems across different industries
 
-### ðŸ  Real Estate AI Automation
+### Real Estate AI Automation
 [distressed-property-detection](https://github.com/mdsadrhoman123-stack/distressed-property-detection) - Property deal detection
 
-### ðŸ¤ M&A Deal-Flow Automation
+### M&A Deal-Flow Automation
 [edugrow-ma-platform](https://github.com/mdsadrhoman123-stack/edugrow-ma-platform) - M&A advisory systems
 
-### â˜€ï¸ Solar CRM Automation
+### Solar CRM Automation
 [irish-solar-crm](https://github.com/mdsadrhoman123-stack/irish-solar-crm) - Field service business systems
 
-### ðŸ¥ Healthcare Document Automation
+### Healthcare Document Automation
 [medical-document-automation](https://github.com/mdsadrhoman123-stack/medical-document-automation) - Medical records processing
 
-### ðŸ›’ E-commerce Review Automation
+### E-commerce Review Automation
 [review-outreach-pipeline](https://github.com/mdsadrhoman123-stack/review-outreach-pipeline) - Customer review generation
 
-### ðŸ’³ Payment Reconciliation Automation
+### Payment Reconciliation Automation
 [paybridge](https://github.com/mdsadrhoman123-stack/paybridge) - Finance automation
 
-### â­ Review Management Automation
+### Review Management Automation
 [reviewshield-ai](https://github.com/mdsadrhoman123-stack/reviewshield-ai) - Reputation management
 
-### ðŸ“Š Executive Report Automation
+### Executive Report Automation
 [-impact-report-dashboard](https://github.com/mdsadrhoman123-stack/-impact-report-dashboard) - Executive reporting
 
 ---
