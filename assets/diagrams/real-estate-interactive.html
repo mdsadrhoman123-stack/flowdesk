@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate AI Automation - Interactive Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .node {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .node:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .node.active {
+            background: rgba(76,175,80,0.3);
+            border-color: #4CAF50;
+        }
+        
+        .node-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .node-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .node-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .connections {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .connection {
+            width: 60px;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            position: relative;
+        }
+        
+        .connection::after {
+            content: 'â†’';
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            font-size: 16px;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        .details-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flow-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(76,175,80,0.3);
+            border-color: #4CAF50;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-animation {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ðŸ  Real Estate AI Automation Architecture</h1>
+        
+        <div class="architecture-diagram">
+            <div class="node" data-node="data-sources">
+                <div class="node-icon">ðŸ“Š</div>
+                <div class="node-title">Data Sources</div>
+                <div class="node-description">MLS, Property Records, Market Data</div>
+            </div>
+            
+            <div class="node" data-node="ai-engine">
+                <div class="node-icon">ðŸ¤–</div>
+                <div class="node-title">AI Engine</div>
+                <div class="node-description">OpenAI GPT-4 Analysis</div>
+            </div>
+            
+            <div class="node" data-node="database">
+                <div class="node-icon">ðŸ—„ï¸</div>
+                <div class="node-title">Database</div>
+                <div class="node-description">PostgreSQL Storage</div>
+            </div>
+            
+            <div class="node" data-node="automation">
+                <div class="node-icon">âš¡</div>
+                <div class="node-title">Automation</div>
+                <div class="node-description">n8n Workflow Engine</div>
+            </div>
+            
+            <div class="node" data-node="output">
+                <div class="node-icon">ðŸ“ˆ</div>
+                <div class="node-title">Output</div>
+                <div class="node-description">Reports, Alerts, Dashboards</div>
+            </div>
+        </div>
+        
+        <div class="connections">
+            <div class="connection"></div>
+            <div class="connection"></div>
+            <div class="connection"></div>
+            <div class="connection"></div>
+        </div>
+        
+        <div class="flow-animation">
+            <div class="flow-step">Data Collection</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">AI Analysis</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Property Scoring</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Alert Generation</div>
+        </div>
+        
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Node Details</h3>
+            <p id="details-content">Click on a node to see more details</p>
+        </div>
+    </div>
+    
+    <script>
+        const nodes = document.querySelectorAll('.node');
+        const detailsPanel = document.getElementById('details-panel');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsContent = document.getElementById('details-content');
+        
+        const nodeDetails = {
+            'data-sources': {
+                title: 'Data Sources',
+                content: 'Collects real-time data from Multiple Listing Services (MLS), county property records, and market analytics APIs. Data includes property details, ownership history, market trends, and demographic information.'
+            },
+            'ai-engine': {
+                title: 'AI Engine',
+                content: 'Uses OpenAI GPT-4 to analyze property data, identify distress signals, calculate investment potential, and generate insights. Processes natural language queries and provides actionable recommendations.'
+            },
+            'database': {
+                title: 'Database',
+                content: 'PostgreSQL database stores all property data, analysis results, and historical records. Optimized for complex queries and real-time access. Includes automated backup and data validation.'
+            },
+            'automation': {
+                title: 'Automation',
+                content: 'n8n workflow engine orchestrates the entire pipeline - from data collection to alert delivery. Handles scheduled tasks, error handling, and integrations with external services.'
+            },
+            'output': {
+                title: 'Output',
+                content: 'Generates comprehensive reports, real-time alerts, and interactive dashboards. Delivers insights via email, SMS, web notifications, and API integrations with CRM systems.'
+            }
+        };
+        
+        nodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = this.getAttribute('data-node');
+                const details = nodeDetails[nodeId];
+                
+                // Remove active class from all nodes
+                nodes.forEach(n => n.classList.remove('active'));
+                
+                // Add active class to clicked node
+                this.classList.add('active');
+                
+                // Update details panel
+                detailsTitle.textContent = details.title;
+                detailsContent.textContent = details.content;
+                detailsPanel.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
