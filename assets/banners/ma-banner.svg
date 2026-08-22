@@ -1,0 +1,87 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="maGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2c3e50;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#34495e;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="maGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#maGradient)"/>
+  <rect width="1200" height="630" fill="url(#maGrid)"/>
+  
+  <!-- Business Diagram -->
+  <g transform="translate(50, 80)">
+    <!-- Company A -->
+    <rect x="0" y="0" width="120" height="150" fill="rgba(231,76,60,0.3)" stroke="rgba(231,76,60,0.8)" stroke-width="2"/>
+    <text x="60" y="75" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Company A</text>
+    
+    <!-- Company B -->
+    <rect x="150" y="0" width="120" height="150" fill="rgba(52,152,219,0.3)" stroke="rgba(52,152,219,0.8)" stroke-width="2"/>
+    <text x="210" y="75" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Company B</text>
+    
+    <!-- Merger Arrow -->
+    <path d="M 135 75 L 165 75" stroke="white" stroke-width="3" marker-end="url(#arrowhead)"/>
+    
+    <!-- Merged Entity -->
+    <rect x="300" y="25" width="150" height="100" fill="rgba(46,204,113,0.3)" stroke="rgba(46,204,113,0.8)" stroke-width="3"/>
+    <text x="375" y="70" text-anchor="middle" fill="white" font-size="16" font-weight="bold">MERGED</text>
+    <text x="375" y="90" text-anchor="middle" fill="white" font-size="12">Entity</text>
+  </g>
+  
+  <!-- Automation Flow -->
+  <g transform="translate(50, 280)">
+    <circle cx="50" cy="50" r="30" fill="#9B59B6" opacity="0.8"/>
+    <text x="50" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">DATA</text>
+    
+    <line x1="80" y1="50" x2="150" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    
+    <circle cx="180" cy="50" r="30" fill="#E67E22" opacity="0.8"/>
+    <text x="180" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">AI</text>
+    
+    <line x1="210" y1="50" x2="280" y2="50" stroke="rgba(255,255,255,0.5)" stroke-width="2"/>
+    
+    <circle cx="310" cy="50" r="30" fill="#1ABC9C" opacity="0.8"/>
+    <text x="310" y="55" text-anchor="middle" fill="white" font-size="12" font-weight="bold">DEAL</text>
+  </g>
+  
+  <!-- Text Content -->
+  <text x="500" y="180" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white">
+    M&A Deal-Flow Automation
+  </text>
+  <text x="500" y="230" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,0.9)">
+    Intelligent Deal Sourcing & Analysis Platform
+  </text>
+  <text x="500" y="280" font-family="Arial, sans-serif" font-size="18" fill="rgba(255,255,255,0.7)">
+    Streamline mergers and acquisitions with AI-powered automation
+  </text>
+  
+  <!-- Tech Stack -->
+  <g transform="translate(500, 350)">
+    <rect x="0" y="0" width="100" height="40" rx="5" fill="rgba(255,87,34,0.8)"/>
+    <text x="50" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">n8n</text>
+    
+    <rect x="120" y="0" width="100" height="40" rx="5" fill="rgba(33,150,243,0.8)"/>
+    <text x="170" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">PostgreSQL</text>
+    
+    <rect x="240" y="0" width="100" height="40" rx="5" fill="rgba(156,39,176,0.8)"/>
+    <text x="290" y="25" text-anchor="middle" fill="white" font-size="14" font-weight="bold">Claude</text>
+  </g>
+  
+  <!-- Results -->
+  <g transform="translate(500, 420)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.8)">
+      <tspan x="0" dy="0">âœ“ 5x Faster Deal Identification</tspan>
+      <tspan x="0" dy="25">âœ“ 90% Due Diligence Automation</tspan>
+      <tspan x="0" dy="25">âœ“ 40% Cost Reduction</tspan>
+    </text>
+  </g>
+  
+  <!-- Branding -->
+  <text x="1150" y="610" text-anchor="end" font-family="Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.6)">
+    Built by K MD SAYAD RAHMAN | Sayad.dev
+  </text>
+</svg>
