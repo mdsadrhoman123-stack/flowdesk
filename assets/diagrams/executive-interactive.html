@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Report Automation - Interactive Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .node {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .node.active {
+            background: rgba(21,101,192,0.3);
+            border-color: #1565c0;
+        }
+        
+        .node-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .node-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .node-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .details-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flow-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(21,101,192,0.3);
+            border-color: #1565c0;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-animation {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ðŸ“Š Executive Report Automation Architecture</h1>
+        
+        <div class="architecture-diagram">
+            <div class="node" data-node="data-collection">
+                <div class="node-icon">ï¿½</div>
+                <div class="node-title">Data Collection</div>
+                <div class="node-description">Multiple Data Sources</div>
+            </div>
+            
+            <div class="node" data-node="analysis">
+                <div class="node-icon">ðŸ”¬</div>
+                <div class="node-title">Impact Analysis</div>
+                <div class="node-description">AI-Powered Insights</div>
+            </div>
+            
+            <div class="node" data-node="visualization">
+                <div class="node-icon">ðŸ“Š</div>
+                <div class="node-title">Visualization</div>
+                <div class="node-description">Dashboard Creation</div>
+            </div>
+            
+            <div class="node" data-node="automation">
+                <div class="node-icon">âš¡</div>
+                <div class="node-title">Automation</div>
+                <div class="node-description">n8n Workflow Engine</div>
+            </div>
+            
+            <div class="node" data-node="distribution">
+                <div class="node-icon">ðŸ“¤</div>
+                <div class="node-title">Distribution</div>
+                <div class="node-description">Executive Delivery</div>
+            </div>
+        </div>
+        
+        <div class="flow-animation">
+            <div class="flow-step">Data Aggregation</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Impact Analysis</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Dashboard Generation</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Executive Distribution</div>
+        </div>
+        
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Node Details</h3>
+            <p id="details-content">Click on a node to see more details</p>
+        </div>
+    </div>
+    
+    <script>
+        const nodes = document.querySelectorAll('.node');
+        const detailsPanel = document.getElementById('details-panel');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsContent = document.getElementById('details-content');
+        
+        const nodeDetails = {
+            'data-collection': {
+                title: 'Data Collection',
+                content: 'Aggregates data from multiple sources including business metrics, financial data, operational KPIs, and external market data. Handles real-time data ingestion and historical data analysis.'
+            },
+            'analysis': {
+                title: 'Impact Analysis',
+                content: 'AI-powered analysis calculates business impact, trends, and performance metrics. Identifies key insights, anomalies, and strategic opportunities for executive decision-making.'
+            },
+            'visualization': {
+                title: 'Visualization',
+                content: 'Creates compelling visual representations including interactive dashboards, executive summaries, and custom reports. Supports multiple formats for different stakeholder needs.'
+            },
+            'automation': {
+                title: 'Automation',
+                content: 'n8n workflow automation handles scheduled report generation, data refresh, and distribution. Ensures timely delivery and maintains data consistency across all reports.'
+            },
+            'distribution': {
+                title: 'Distribution',
+                content: 'Automated distribution to executives via email, web portals, and mobile applications. Implements access controls, personalization, and delivery scheduling based on executive preferences.'
+            }
+        };
+        
+        nodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = this.getAttribute('data-node');
+                const details = nodeDetails[nodeId];
+                
+                nodes.forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                detailsTitle.textContent = details.title;
+                detailsContent.textContent = details.content;
+                detailsPanel.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
