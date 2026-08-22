@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Document Automation - Interactive Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .node {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .node.active {
+            background: rgba(46,204,113,0.3);
+            border-color: #2ecc71;
+        }
+        
+        .node-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .node-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .node-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .details-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flow-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(46,204,113,0.3);
+            border-color: #2ecc71;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-animation {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ðŸ¥ Healthcare Document Automation Architecture</h1>
+        
+        <div class="architecture-diagram">
+            <div class="node" data-node="document-intake">
+                <div class="node-icon">ðŸ“„</div>
+                <div class="node-title">Document Intake</div>
+                <div class="node-description">Scanning, Email, Upload</div>
+            </div>
+            
+            <div class="node" data-node="ocr-processing">
+                <div class="node-icon">ðŸ”</div>
+                <div class="node-title">OCR Processing</div>
+                <div class="node-description">Text Extraction & Recognition</div>
+            </div>
+            
+            <div class="node" data-node="ai-analysis">
+                <div class="node-icon">ðŸ¤–</div>
+                <div class="node-title">AI Analysis</div>
+                <div class="node-description">Data Classification & Validation</div>
+            </div>
+            
+            <div class="node" data-node="ehr-integration">
+                <div class="node-icon">ðŸ—„ï¸</div>
+                <div class="node-title">EHR Integration</div>
+                <div class="node-description">Electronic Health Records</div>
+            </div>
+            
+            <div class="node" data-node="compliance">
+                <div class="node-icon">âœ“</div>
+                <div class="node-title">Compliance</div>
+                <div class="node-description">HIPAA & Security</div>
+            </div>
+        </div>
+        
+        <div class="flow-animation">
+            <div class="flow-step">Document Capture</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">OCR Processing</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">AI Classification</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">EHR Integration</div>
+        </div>
+        
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Node Details</h3>
+            <p id="details-content">Click on a node to see more details</p>
+        </div>
+    </div>
+    
+    <script>
+        const nodes = document.querySelectorAll('.node');
+        const detailsPanel = document.getElementById('details-panel');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsContent = document.getElementById('details-content');
+        
+        const nodeDetails = {
+            'document-intake': {
+                title: 'Document Intake',
+                content: 'Multi-channel document capture including scanning, email ingestion, file uploads, and API integration. Supports PDFs, images, and various document formats with automatic quality checks.'
+            },
+            'ocr-processing': {
+                title: 'OCR Processing',
+                content: 'Advanced optical character recognition extracts text from scanned documents and images. Handles handwriting, stamps, and medical terminology with high accuracy rates.'
+            },
+            'ai-analysis': {
+                title: 'AI Analysis',
+                content: 'Machine learning algorithms classify document types, extract key medical data, validate information completeness, and flag potential discrepancies for human review.'
+            },
+            'ehr-integration': {
+                title: 'EHR Integration',
+                content: 'Seamless integration with Electronic Health Records systems. Automates data entry, updates patient records, and maintains audit trails for all document processing activities.'
+            },
+            'compliance': {
+                title: 'Compliance',
+                content: 'Full HIPAA compliance with encrypted data storage, access controls, audit logging, and security protocols. Ensures patient data protection throughout the automation pipeline.'
+            }
+        };
+        
+        nodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = this.getAttribute('data-node');
+                const details = nodeDetails[nodeId];
+                
+                nodes.forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                detailsTitle.textContent = details.title;
+                detailsContent.textContent = details.content;
+                detailsPanel.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
