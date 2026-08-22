@@ -39,7 +39,7 @@ const repos = [
         title: 'E-commerce Review Automation',
         industry: 'E-commerce',
         url: 'https://github.com/mdsadrhoman123-stack/review-outreach-pipeline',
-        icon: 'ï¿½',
+        icon: 'ðŸ›’',
         color: '#e91e63'
     },
     {
