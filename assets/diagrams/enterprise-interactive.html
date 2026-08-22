@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Intake Automation - Interactive Architecture</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .architecture-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .node {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+        
+        .node.active {
+            background: rgba(52,73,94,0.3);
+            border-color: #34495e;
+        }
+        
+        .node-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .node-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .node-description {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+        
+        .details-panel {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .details-panel.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .flow-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        .flow-step {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .flow-step:hover {
+            background: rgba(52,73,94,0.3);
+            border-color: #34495e;
+        }
+        
+        .flow-arrow {
+            font-size: 2em;
+            color: rgba(255,255,255,0.5);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .architecture-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .flow-animation {
+                flex-direction: column;
+            }
+            
+            .flow-arrow {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ðŸ¢ Enterprise Intake Automation Architecture</h1>
+        
+        <div class="architecture-diagram">
+            <div class="node" data-node="form-submission">
+                <div class="node-icon">ðŸ“</div>
+                <div class="node-title">Form Submission</div>
+                <div class="node-description">Web Forms, Email, API</div>
+            </div>
+            
+            <div class="node" data-node="ai-classification">
+                <div class="node-icon">ðŸ¤–</div>
+                <div class="node-title">AI Classification</div>
+                <div class="node-description">Intent & Category Detection</div>
+            </div>
+            
+            <div class="node" data-node="routing">
+                <div class="node-icon">ðŸ”€</div>
+                <div class="node-title">Smart Routing</div>
+                <div class="node-description">Department Assignment</div>
+            </div>
+            
+            <div class="node" data-node="automation">
+                <div class="node-icon">âš¡</div>
+                <div class="node-title">Automation</div>
+                <div class="node-description">n8n Workflow Engine</div>
+            </div>
+            
+            <div class="node" data-node="notification">
+                <div class="node-icon">ðŸ””</div>
+                <div class="node-title">Notification</div>
+                <div class="node-description">Slack, Email, Alerts</div>
+            </div>
+        </div>
+        
+        <div class="flow-animation">
+            <div class="flow-step">Request Intake</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">AI Classification</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Smart Routing</div>
+            <div class="flow-arrow">â†’</div>
+            <div class="flow-step">Team Notification</div>
+        </div>
+        
+        <div class="details-panel" id="details-panel">
+            <h3 id="details-title">Node Details</h3>
+            <p id="details-content">Click on a node to see more details</p>
+        </div>
+    </div>
+    
+    <script>
+        const nodes = document.querySelectorAll('.node');
+        const detailsPanel = document.getElementById('details-panel');
+        const detailsTitle = document.getElementById('details-title');
+        const detailsContent = document.getElementById('details-content');
+        
+        const nodeDetails = {
+            'form-submission': {
+                title: 'Form Submission',
+                content: 'Multi-channel intake including web forms, email submissions, API endpoints, and document uploads. Validates data completeness and formats submissions for processing.'
+            },
+            'ai-classification': {
+                title: 'AI Classification',
+                content: 'Machine learning algorithms analyze submission content to determine request type, urgency, department, and required actions. Extracts key information and flags priority items.'
+            },
+            'routing': {
+                title: 'Smart Routing',
+                content: 'Intelligent routing engine assigns requests to appropriate departments or team members based on classification, workload, and expertise. Implements load balancing and escalation rules.'
+            },
+            'automation': {
+                title: 'Automation',
+                content: 'n8n workflow automation handles the entire intake process - from submission to assignment. Includes automated acknowledgments, SLA tracking, and follow-up sequences.'
+            },
+            'notification': {
+                title: 'Notification',
+                content: 'Multi-channel notification system alerts teams via Slack, email, SMS, and custom integrations. Provides real-time updates and escalation for urgent requests.'
+            }
+        };
+        
+        nodes.forEach(node => {
+            node.addEventListener('click', function() {
+                const nodeId = this.getAttribute('data-node');
+                const details = nodeDetails[nodeId];
+                
+                nodes.forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+                
+                detailsTitle.textContent = details.title;
+                detailsContent.textContent = details.content;
+                detailsPanel.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
