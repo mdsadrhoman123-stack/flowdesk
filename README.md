@@ -51,7 +51,7 @@ FlowDesk automates the entire intake lifecycle - from message to assigned task -
 
 **Core capabilities:**
 - **Slack-native intake:** Captures requests directly from team channels, no new tool to learn
-- **Triple-AI failsafe:** GPT-4 → Claude → Regex cascade, pipeline cannot die with provider outage
+- **Triple-AI failsafe:** GPT-4 â†’ Claude â†’ Regex cascade, pipeline cannot die with provider outage
 - **Sub-millisecond capacity scoring:** Redis-backed atomic workload tracking, always knows who has bandwidth
 - **Proactive SLA escalation:** Watchers fire before deadlines, not after
 - **Full audit trail:** Every decision logged to PostgreSQL with correlation IDs
@@ -91,7 +91,7 @@ flowchart TD
 
 **Data Flow:**
 1. **Capture:** Slack webhook captures requests instantly from team channels
-2. **Classify:** Triple-AI cascade (GPT-4 → Claude → Regex) ensures 100% uptime
+2. **Classify:** Triple-AI cascade (GPT-4 â†’ Claude â†’ Regex) ensures 100% uptime
 3. **Score:** Redis provides sub-millisecond capacity scoring for optimal assignment
 4. **Assign:** Work auto-assigned to best-fit person based on real-time capacity
 5. **Monitor:** SLA watchers proactively escalate before deadlines slip
@@ -132,8 +132,8 @@ flowchart TD
 | :--- | :--- |
 | Workflow Nodes | 92 |
 | Active Connections | 70 |
-| AI Redundancy | 3x (GPT-4 → Claude → Regex) |
-| Major Versions | 5 (v1.0 → v5.1) |
+| AI Redundancy | 3x (GPT-4 â†’ Claude â†’ Regex) |
+| Major Versions | 5 (v1.0 â†’ v5.1) |
 | Classification Success | 99.2% (GPT-4 alone) |
 | Capacity Lookup | 0.3ms (Redis atomic) |
 | Audit Coverage | 100% |
@@ -145,33 +145,33 @@ flowchart TD
 ### BEFORE (Manual Triage - High Risk)
 ```
 [Slack Request Received] 
-    ↓ (buried in threads)
+    â†“ (buried in threads)
 [Manual Discovery] 
-    ↓ (hours delay)
+    â†“ (hours delay)
 [Human Triage] 
-    ↓ (inconsistent)
+    â†“ (inconsistent)
 [Manual Assignment] 
-    ↓ (guessing capacity)
+    â†“ (guessing capacity)
 [No SLA Tracking] 
-    ↓
-= **Missed work, delayed responses, no accountability** ❌
+    â†“
+= **Missed work, delayed responses, no accountability** âŒ
 ```
 
 ### AFTER (Automated Intake - Resilient)
 ```
 [Slack Request Received] 
-    ↓ (instant webhook capture)
+    â†“ (instant webhook capture)
 [Triple-AI Classification] 
-    ↓ (99.2% success rate)
+    â†“ (99.2% success rate)
 [Redis Capacity Scoring] 
-    ↓ (sub-millisecond)
+    â†“ (sub-millisecond)
 [Auto-Assignment] 
-    ↓ (optimal matching)
+    â†“ (optimal matching)
 [Proactive SLA Monitoring] 
-    ↓ (before deadlines)
+    â†“ (before deadlines)
 [Full Audit Trail] 
-    ↓
-= **Instant triage, optimal assignment, zero single points of failure** ✅
+    â†“
+= **Instant triage, optimal assignment, zero single points of failure** âœ…
 ```
 
 **The difference:** Automated intake with triple-AI failsafe ensures system never goes down, even during provider outages.
@@ -194,7 +194,7 @@ flowchart TD
 ## Non-functional Highlights
 
 **Reliability & Error Handling:**
-- **Triple-AI Failsafe:** GPT-4 → Claude → Regex cascade ensures 100% uptime
+- **Triple-AI Failsafe:** GPT-4 â†’ Claude â†’ Regex cascade ensures 100% uptime
 - **No Silent Failures:** Every error triggers alarms and fallback activation
 - **Retry Logic:** Exponential backoff on every external call
 - **Idempotent Processing:** No double-counting or duplicate runs
@@ -216,11 +216,11 @@ flowchart TD
 ## Design Decisions
 
 **Why This Architecture:**
-- **Triple-AI Failsafe:** Single provider outage caused 40min downtime → unacceptable
-- **Redis Capacity Scoring:** Manual assignment was bottleneck → real-time tracking needed
-- **Proactive SLA Monitoring:** Reactive escalation too late → prevent vs fix
-- **Slack-Native:** No new tool adoption → meets teams where they work
-- **Full Audit Trail:** Enterprise compliance requirements → 100% logging
+- **Triple-AI Failsafe:** Single provider outage caused 40min downtime â†’ unacceptable
+- **Redis Capacity Scoring:** Manual assignment was bottleneck â†’ real-time tracking needed
+- **Proactive SLA Monitoring:** Reactive escalation too late â†’ prevent vs fix
+- **Slack-Native:** No new tool adoption â†’ meets teams where they work
+- **Full Audit Trail:** Enterprise compliance requirements â†’ 100% logging
 
 **Trade-offs:**
 - **Complexity vs Reliability:** 92 nodes add complexity but ensure zero downtime
@@ -285,14 +285,14 @@ A: This is a production system (v5.1) handling enterprise-scale request volumes.
 
 **K MD SAYAD RAHMAN** - Sayad.dev | AI Automation
 
-**📧 Work Email:** khandokarsayad@gmail.com  
-**📧 Personal Email:** mdsadrhoman123@gmail.com  
-**💼 LinkedIn:** https://linkedin.com/in/khandokarsabbir  
-**🐙 GitHub:** https://github.com/mdsadrhoman123-stack
+**ðŸ“§ Work Email:** khandokarsayad@gmail.com  
+**ðŸ“§ Personal Email:** mdsadrhoman123@gmail.com  
+**ðŸ’¼ LinkedIn:** https://linkedin.com/in/khandokarsabbir  
+**ðŸ™ GitHub:** https://github.com/mdsadrhoman123-stack
 
-**🚀 Open to Work - Accepting New Automation Projects**
+**ðŸš€ Open to Work - Accepting New Automation Projects**
 
-**📩 Email me with your automation challenge - I'll tell you exactly 
+**ðŸ“© Email me with your automation challenge - I'll tell you exactly 
 which part I'd automate first, and which part I wouldn't.**
 
 ---
@@ -310,7 +310,7 @@ which part I'd automate first, and which part I wouldn't.**
 
 **Built by K MD SAYAD RAHMAN (Sayad.dev | AI Automation)**
 
-**📧 Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com
+**ðŸ“§ Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com
 
 Copyright (c) 2024 K MD SAYAD RAHMAN. All rights reserved. Portfolio use only.
 
