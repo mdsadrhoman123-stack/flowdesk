@@ -15,6 +15,12 @@
 <!-- Interactive Architecture Diagram -->
 [View Interactive Architecture Diagram](https://raw.githubusercontent.com/mdsadrhoman123-stack/flowdesk/main/assets/diagrams/enterprise-interactive.html)
 
+<!-- Portfolio Navigation -->
+<script src="https://raw.githubusercontent.com/mdsadrhoman123-stack/flowdesk/main/assets/navigation/navigation.js"></script>
+<script>
+autoInjectNavigation('flowdesk');
+</script>
+
 ---
 
 ## Contents
