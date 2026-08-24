@@ -1,9 +1,40 @@
-# Notice
+# NOTICE
 
-This repository documents an automation system built for **Edugrow.sg** (M&A Advisory) by **Sayad / Sayad**.
+## What this repository is
 
-- The workflow file in `/workflows` is a **sanitized skeleton** for demonstration purposes only.
-- All client credentials, API keys, business data, and proprietary business logic have been **removed or replaced with placeholders**.
-- This repository is shared as a portfolio artifact, not as a working, deployable system.
+Documentation of a delivered automation system, published as portfolio work by
+K MD SAYAD RAHMAN (AI Automation Engineer).
 
-For a walkthrough of the real, working system, reach out via [LinkedIn](https://linkedin.com/in/khandokarsabbir).
+It is **not** a runnable product. It is not intended to be cloned and pointed at
+your own accounts.
+
+## What is not here, and will not be
+
+- **Client data.** None, in any form — not anonymised, not sampled, not a
+  redacted screenshot.
+- **Credentials, tokens, webhook secrets, API keys.** Never committed.
+- **Client-identifying detail** beyond what the client has agreed may be shared.
+- **Internal endpoints or hostnames.**
+
+## Client confidentiality
+
+This system was built for Enterprise service team. Anything that would identify the
+client, their customers or their commercial terms is excluded unless written
+permission is on file.
+
+## If you are reviewing this as a prospective client
+
+The absence of a full workflow export is deliberate and it is the same policy
+your project would get. Sanitised architecture, described honestly, is what can
+be published. Your credentials and your customers' data are not portfolio
+material.
+
+## Reporting a problem
+
+If anything in this repository looks like it should not be public, contact me
+and it comes down first and gets discussed second.
+
+---
+
+**K MD SAYAD RAHMAN** — AI Automation Engineer
+[LinkedIn](https://www.linkedin.com/in/khandokarsayad)

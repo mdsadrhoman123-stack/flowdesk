@@ -1,0 +1,17 @@
+flowchart LR
+    in(["A request arrives"])
+    read["Understood and prioritised"]
+    route{"Sent to whoever has room"}
+    done["Assigned, tracked, on the clock"]
+    esc["Escalated before the deadline"]
+
+    in --> read
+    read --> route
+    route --> done
+    route -.-> esc
+
+    classDef default fill:#F8F7F3,stroke:#12151B,stroke-width:1px,color:#12151B;
+    classDef ok fill:#2F6B52,stroke:#12151B,stroke-width:1px,color:#F5F4EF;
+    classDef bad fill:#FEE2E2,stroke:#DC2626,stroke-width:1.5px,color:#7F1D1D;
+    class done ok;
+    class esc bad;

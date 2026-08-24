@@ -1,318 +1,196 @@
-# Enterprise Teams: Automate Client Intake Without Single Points of Failure
+<img src="assets/banner.svg" alt="FlowDesk — Slack-native intake & execution" width="100%">
 
-**Client:** Enterprise Service Team | **Industry:** Enterprise | **Delivered by:** K MD SAYAD RAHMAN (Sayad.dev | AI Automation)
+# FlowDesk
 
-<!-- Professional Banner -->
-<img src="assets/banners/enterprise-banner.svg" alt="Enterprise Intake Automation" style="width: 100%; max-width: 1200px; height: auto; border-radius: 10px; margin: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+**Every request that lands in Slack gets classified, assigned to whoever actually has room, and escalated before the deadline rather than after it.**
 
-<!-- Interactive Architecture Diagram -->
-[View Interactive Architecture Diagram](https://raw.githubusercontent.com/mdsadrhoman123-stack/flowdesk/main/assets/diagrams/enterprise-interactive.html)
+![production](https://img.shields.io/badge/status-live%20in%20production-2F6B52?style=flat-square) ![sector](https://img.shields.io/badge/sector-Enterprise%20operations-12151B?style=flat-square) ![built with](https://img.shields.io/badge/built%20with-n8n-12151B?style=flat-square) ![Workflow nodes](https://img.shields.io/badge/Workflow%20nodes-92-5B6472?style=flat-square)
 
----
-
-## Contents
-
-- [The Problem](#the-problem)
-- [The Solution](#the-solution)
-- [Architecture](#architecture)
-- [How It Works](#how-it-works)
-- [Key Metrics](#key-metrics)
-- [Before/After Comparison](#beforeafter-comparison)
-- [Impact Statement](#impact-statement)
-- [Non-functional Highlights](#non-functional-highlights)
-- [Design Decisions](#design-decisions)
-- [What I'd Improve](#what-id-improve)
-- [Roadmap](#roadmap)
-- [What I'm Not Publishing](#what-im-not-publishing)
-- [FAQ](#faq)
-- [Contact](#contact)
+| | |
+| :--- | :--- |
+| **Built for** | Enterprise service team |
+| **Industry** | Operations |
+| **Status** | production |
+| **Role** | Designed, built and deployed end to end |
 
 ---
 
-## The Problem
+### On this page
 
-A growing service team was losing hours every day to manual triage. Requests were buried in Slack threads, important work was missed entirely, and there was no accountability trail. Single AI provider dependency meant one API outage could stop the entire pipeline silently.
-
-**In practical terms:**
-- Requests buried in Slack threads = **important work missed**
-- Manual triage by human = **hours of delay before action**
-- No accountability trail = **constant "who's handling this?" questions**
-- Single AI provider dependency = **one outage = entire pipeline stops**
-- Manual capacity tracking = **inefficient work distribution**
-
-**The cost:** Delayed responses, frustrated clients, dropped balls, and teams spending more time organizing work than doing it.
+[The problem](#the-problem) · [What changed](#what-changed) · [How it works](#how-it-works) · [When it breaks](#when-it-breaks) · [The stack](#the-stack) · [Limitations](#honest-limitations) · [Read deeper](#read-deeper)
 
 ---
 
-## The Solution
+## The problem
 
-FlowDesk automates the entire intake lifecycle - from message to assigned task - with built-in resilience through triple-AI failsafe architecture.
+A client message lands in Slack on a Friday afternoon. It gets a thumbs-up, scrolls out of view, and comes back on Monday as a complaint.
 
-**Core capabilities:**
-- **Slack-native intake:** Captures requests directly from team channels, no new tool to learn
-- **Triple-AI failsafe:** GPT-4 → Claude → Regex cascade, pipeline cannot die with provider outage
-- **Sub-millisecond capacity scoring:** Redis-backed atomic workload tracking, always knows who has bandwidth
-- **Proactive SLA escalation:** Watchers fire before deadlines, not after
-- **Full audit trail:** Every decision logged to PostgreSQL with correlation IDs
-- **92-node production workflow:** Battle-tested across 5 major versions
+Nobody here is careless. Intake simply lives in people's habits instead of in a system, so urgency is guessed rather than assessed, work goes to whoever is online rather than whoever has capacity, and nothing is tracked until it is already late.
 
----
+The real cost is not one dropped request. It is that nobody can tell you how many were dropped.
 
-## Architecture
+## What changed
+
+| | Before | After |
+| :--- | :--- | :--- |
+| **Urgency** | Guessed by whoever reads it first | Classified on every request, same criteria |
+| **Assignment** | Whoever is online | Live capacity score per teammate |
+| **Tracking starts** | When someone remembers | At intake, automatically |
+| **Escalation** | After the deadline | Before it, at a set threshold |
+| **“Why here?”** | Nobody knows | The reasoning is in the audit row |
+
+<sub>Before/after describes the change in process, not benchmarked throughput. Where a number is not measured, it is not claimed.</sub>
+
+## How it works
+
+Every incoming message passes through a triage step that classifies intent and urgency, then a Redis-backed workload engine scores live capacity per teammate and either assigns the work or escalates it — before a human has to look at it.
+
+<table>
+<tr>
+<td width="42" valign="top" align="center"><b>01</b></td><td valign="top"><b>A request arrives</b><br>A teammate or client writes in Slack. Nothing new to learn, no form, no portal.</td>
+</tr>
+<tr>
+<td width="42" valign="top" align="center"><b>02</b></td><td valign="top"><b>It gets read properly</b><br>Intent and urgency are extracted from the message as written, including in other languages.</td>
+</tr>
+<tr>
+<td width="42" valign="top" align="center"><b>03</b></td><td valign="top"><b>It goes to the right person</b><br>Not the nearest person. The one whose live workload has room for it.</td>
+</tr>
+<tr>
+<td width="42" valign="top" align="center"><b>04</b></td><td valign="top"><b>The clock starts itself</b><br>An SLA timer attaches at intake, not when someone remembers to start tracking.</td>
+</tr>
+<tr>
+<td width="42" valign="top" align="center"><b>05</b></td><td valign="top"><b>It escalates early</b><br>At a set threshold the lead is told while there is still time to act.</td>
+</tr>
+<tr>
+<td width="42" valign="top" align="center"><b>06</b></td><td valign="top"><b>The decision is on record</b><br>Assignment, escalation and priority changes are logged with the reasoning behind them.</td>
+</tr>
+</table>
+
+### How it flows
+
+<sub>What happens to the client's work, in the order they experience it. The internal build — node graph, execution order, prompts, thresholds — is deliberately not published.</sub>
 
 ```mermaid
-flowchart TD
-    classDef blue fill:#3498db,color:#fff
-    classDef purple fill:#9b59b6,color:#fff
-    classDef green fill:#2ecc71,color:#fff
+flowchart LR
+    in(["A request arrives"])
+    read["Understood and prioritised"]
+    route{"Sent to whoever has room"}
+    done["Assigned, tracked, on the clock"]
+    esc["Escalated before the deadline"]
 
-    Slack[Slack Request webhook capture]:::blue --> Triage{AI Triage Cascade}:::purple
+    in --> read
+    read --> route
+    route --> done
+    route -.-> esc
 
-    subgraph Failsafe[Triple-AI Failsafe Layer]
-        GPT[GPT-4 Primary classifier]
-        Claude[Claude Fallback classifier]
-        Regex[Regex Rules Last resort]
-    end
-
-    Triage -->|1st attempt| GPT:::purple
-    Triage -->|if GPT-4 fails| Claude:::purple
-    Triage -->|if both fail| Regex:::purple
-
-    GPT --> Score[Redis Capacity Scoring sub-ms atomic updates]:::green
-    Claude --> Score:::green
-    Regex --> Score:::green
-
-    Score --> Assign[Auto-Assign + SLA Watcher]:::green
-    Assign -->|SLA risk| Alert[Escalation Lead notification]:::green
-    Assign -->|always| Audit[PostgreSQL Audit Trail correlation ID threaded]:::blue
-    Alert --> Audit:::blue
+    classDef default fill:#F8F7F3,stroke:#12151B,stroke-width:1px,color:#12151B;
+    classDef ok fill:#2F6B52,stroke:#12151B,stroke-width:1px,color:#F5F4EF;
+    classDef bad fill:#FEE2E2,stroke:#DC2626,stroke-width:1.5px,color:#7F1D1D;
+    class done ok;
+    class esc bad;
 ```
 
-**Data Flow:**
-1. **Capture:** Slack webhook captures requests instantly from team channels
-2. **Classify:** Triple-AI cascade (GPT-4 → Claude → Regex) ensures 100% uptime
-3. **Score:** Redis provides sub-millisecond capacity scoring for optimal assignment
-4. **Assign:** Work auto-assigned to best-fit person based on real-time capacity
-5. **Monitor:** SLA watchers proactively escalate before deadlines slip
-6. **Audit:** Every action logged to PostgreSQL with full traceability
+<details>
+<summary><b>What the shapes mean</b> — colour is not the only signal</summary>
 
----
-
-## How It Works
-
-### Step-by-Step Process:
-
-1. **Slack Intake:** Webhook captures requests directly from team channels
-2. **AI Classification:** GPT-4 reads message, classifies intent, urgency, language
-3. **Failsafe Activation:** If GPT-4 fails, Claude automatically takes over
-4. **Last Resort:** If both AIs fail, regex rules extract basics (never offline)
-5. **Capacity Scoring:** Redis atomically scores every teammate's current capacity
-6. **Auto-Assignment:** Work assigned to best-fit person based on real-time data
-7. **SLA Monitoring:** Watchers track time-remaining vs assignee status
-8. **Proactive Escalation:** Alerts fire before deadlines, not after
-9. **Audit Logging:** Every step logged to PostgreSQL with correlation IDs
-
-### Technology Stack:
-- **Orchestration:** n8n (92-node production workflow)
-- **AI - Primary:** OpenAI GPT-4 for intent classification
-- **AI - Fallback:** Anthropic Claude for backup classification
-- **AI - Last Resort:** Regex rules for offline reliability
-- **Cache:** Redis for sub-millisecond capacity scoring
-- **Database:** PostgreSQL for permanent audit trail
-- **Integration:** Slack API for native message capture
-- **Infrastructure:** Docker for self-hosted deployment
-- **System Type:** Enterprise Intake & Lifecycle System
-
----
-
-## Key Metrics
-
-| Metric | Value |
+| Shape | Means |
 | :--- | :--- |
-| Workflow Nodes | 92 |
-| Active Connections | 70 |
-| AI Redundancy | 3x (GPT-4 → Claude → Regex) |
-| Major Versions | 5 (v1.0 → v5.1) |
-| Classification Success | 99.2% (GPT-4 alone) |
-| Capacity Lookup | 0.3ms (Redis atomic) |
-| Audit Coverage | 100% |
+| **rounded** | Where the client's process starts |
+| **box** | Something the system does |
+| **diamond** | A decision point |
+| **slanted** | A person has to act |
+| **green box** | The good outcome |
+| **red box** | Failure path — held, escalated or alerted |
+
+Red appears in exactly one role across every repo in this portfolio: where failure goes. Nowhere else. If you see red, something is being held, escalated or alerted.
+</details>
+
+> **Walk it interactively** — [open the demo](https://mdsadrhoman123-stack.github.io/flowdesk/) and press **Break it** to watch the failure path light up. Source: [`docs/index.html`](docs/index.html)
+
+## When it breaks
+
+Most automation portfolios show you the happy path. The happy path is the easy half. This is the half that decides whether a system survives contact with a real business.
+
+| What goes wrong | How it is detected | What the system does | Who finds out |
+| :--- | :--- | :--- | :--- |
+| **Primary model down or rate-limited** | Node error output | Claude takes over, then a regex tier | Alert names which tier served it |
+| **Both providers unreachable** | Second failure in the chain | Regex classifies, flagged low-confidence | Lead alerted, request still moves |
+| **Every teammate at capacity** | Redis capacity score | Queue and escalate to lead | Alert, not a silent queue |
+| **Owner never acknowledges** | Acknowledgement timeout | Re-escalate rather than wait | Alert names both owners |
+| **SLA nearing breach** | Timer threshold | Escalate while time remains | Alert states time left |
+| **Slack API rejects a send** | Node error output | Retry with backoff, then queue | Alert with request context |
+| **Redis unavailable** | Connection error | Fail closed — hold rather than guess capacity | Immediate alert |
+| **Anything unanticipated** | Global error trigger | Halt that execution, keep state | Alert with execution ID |
+
+The default on an unhandled condition is to **stop and tell someone** — never to continue on a guess. A silent success is the failure mode that costs the most, because nobody goes looking for it.
+
+## The stack
+
+| Component | Why this one |
+| :--- | :--- |
+| **n8n** | Self-hosted, so client conversations never leave their infrastructure |
+| **Slack API** | The team was already there — a new tool would have gone unused |
+| **Redis** | Capacity is read on every single request, so it has to be fast |
+| **OpenAI GPT-4** | Primary classifier for intent and urgency |
+| **Anthropic Claude** | Second provider, so one outage cannot take both tiers down |
+| **PostgreSQL** | Append-only audit history that survives a workflow re-import |
+| **Docker** | Same stack on every client instance |
+
+### Counted, not estimated
+
+| | |
+| :--- | :--- |
+| Workflow nodes | **92** |
+| Connections | **70** |
+| Production versions | **5  (v1 → v5.1)** |
+| AI failsafe tiers | **3** |
+
+<sub>These are counts from the built system — nodes, stages, versions, gates. No efficiency percentages are published here without a stated measurement method.</sub>
+
+### Also worth knowing
+
+- Handles requests in multiple languages without a separate translation step.
+
+## Honest limitations
+
+Every design decision costs something. These are the trade-offs in this build, stated by the person who made them.
+
+- Capacity scoring counts open work, not difficulty. Two requests of the same count are not the same load, and a teammate on one hard task can read as available.
+- Fails closed when Redis is unavailable, so an outage delays assignment rather than guessing wrong. Correct for this client, but it is a trade — a durable queue in front of the capacity check would buffer instead of hold.
+- Single Slack workspace. Multi-workspace would need a tenant key on every Redis and audit write, not only at intake.
+- The regex tier classifies urgency, not scope. When both providers are down the request keeps moving, but a human should review it.
+
+## What is not in this repo
+
+- **Client data.** None, in any form. Not anonymised, not sampled.
+- **Credentials and endpoints.** Never committed. See [`NOTICE.md`](NOTICE.md).
+- **The workflow itself.** No exports, no node graph, no execution order, no prompts, no scoring thresholds, no integration wiring — not sanitised, not partial, not in a screenshot. That is the build, and the build belongs to the engagement that paid for it.
+
+This repository documents *how the problem was thought about* — the failure paths, the trade-offs, the reasoning. That is what tells you whether to hire someone. A copy of the wiring would not.
+
+This is a portfolio repository documenting delivered work. It is not a product you can clone and run against your own accounts.
+
+## Read deeper
+
+| | |
+| :--- | :--- |
+| [01 · The problem](docs/01-problem.md) | The situation before, in full |
+| [02 · The client journey](docs/02-journey.md) | Step by step, from their side |
+| [03 · Architecture](docs/03-architecture.md) | Diagrams and the reasoning |
+| [04 · Failure handling](docs/04-failure-handling.md) | Every path, and where it lands |
+| [05 · The stack](docs/05-stack.md) | What was chosen and what was rejected |
+| [06 · Results](docs/06-results.md) | What is measured and what is not |
+| [07 · Limitations](docs/07-limitations.md) | The trade-offs, in detail |
 
 ---
 
-## Before/After Comparison
+<img src="assets/cta.svg" alt="If a process depends on someone noticing when it breaks, that is the problem I work on." width="100%">
 
-### BEFORE (Manual Triage - High Risk)
-```
-[Slack Request Received] 
-    ↓ (buried in threads)
-[Manual Discovery] 
-    ↓ (hours delay)
-[Human Triage] 
-    ↓ (inconsistent)
-[Manual Assignment] 
-    ↓ (guessing capacity)
-[No SLA Tracking] 
-    ↓
-= **Missed work, delayed responses, no accountability** ❌
-```
+### Tell me what the process is
 
-### AFTER (Automated Intake - Resilient)
-```
-[Slack Request Received] 
-    ↓ (instant webhook capture)
-[Triple-AI Classification] 
-    ↓ (99.2% success rate)
-[Redis Capacity Scoring] 
-    ↓ (sub-millisecond)
-[Auto-Assignment] 
-    ↓ (optimal matching)
-[Proactive SLA Monitoring] 
-    ↓ (before deadlines)
-[Full Audit Trail] 
-    ↓
-= **Instant triage, optimal assignment, zero single points of failure** ✅
-```
+I will tell you honestly whether automating it is worth your money — including when the answer is no.
 
-**The difference:** Automated intake with triple-AI failsafe ensures system never goes down, even during provider outages.
+**K MD SAYAD RAHMAN** — AI Automation Engineer  
+n8n · AI agents · production reliability  
+[LinkedIn](https://www.linkedin.com/in/khandokarsayad) · [More systems](https://github.com/mdsadrhoman123-stack)
 
----
-
-## Impact Statement
-
-**Business Value Delivered:**
-- **Zero single points of failure** through triple-AI architecture
-- **99.2% classification success** before failsafe activation
-- **Sub-millisecond capacity decisions** for optimal work distribution
-- **Proactive SLA escalation** prevents deadline misses
-- **100% audit coverage** for full traceability and compliance
-
-**Client ROI:** Production-hardened system (v5.1) that eliminated manual triage and ensured 99.7% uptime through failsafe architecture.
-
----
-
-## Non-functional Highlights
-
-**Reliability & Error Handling:**
-- **Triple-AI Failsafe:** GPT-4 → Claude → Regex cascade ensures 100% uptime
-- **No Silent Failures:** Every error triggers alarms and fallback activation
-- **Retry Logic:** Exponential backoff on every external call
-- **Idempotent Processing:** No double-counting or duplicate runs
-- **Production-Grade:** 92 nodes across 5 major versions, battle-tested
-
-**Performance:**
-- **Sub-millisecond capacity scoring** via Redis atomic operations
-- **99.2% classification success** on primary AI (before failsafe)
-- **Proactive monitoring** prevents SLA breaches vs reactive responses
-- **Scalable architecture** handles increased request volumes
-
-**Resilience:**
-- **Multi-tier failsafes:** No single point of failure, ever
-- **Provider redundancy:** System continues during AI provider outages
-- **Capacity awareness:** Real-time workload tracking prevents overload
-
----
-
-## Design Decisions
-
-**Why This Architecture:**
-- **Triple-AI Failsafe:** Single provider outage caused 40min downtime → unacceptable
-- **Redis Capacity Scoring:** Manual assignment was bottleneck → real-time tracking needed
-- **Proactive SLA Monitoring:** Reactive escalation too late → prevent vs fix
-- **Slack-Native:** No new tool adoption → meets teams where they work
-- **Full Audit Trail:** Enterprise compliance requirements → 100% logging
-
-**Trade-offs:**
-- **Complexity vs Reliability:** 92 nodes add complexity but ensure zero downtime
-- **Cost vs Redundancy:** Triple AI increases cost but eliminates single points of failure
-- **Development Time vs Production Quality:** 5 versions to reach production-hardened state
-
----
-
-## What I'd Improve
-
-With more time/budget:
-- **Advanced Analytics:** Capacity planning and trend analysis
-- **Multi-Channel Expansion:** Beyond Slack to email, Teams, etc.
-- **ML Capacity Prediction:** Predictive modeling for workload forecasting
-- **Custom SLA Engines:** Industry-specific SLA rule sets
-- **Mobile App:** Mobile interface for on-the-go assignment management
-
----
-
-## Roadmap
-
-- [ ] **v6.0:** Advanced analytics and capacity planning
-- [ ] **Multi-Channel:** Email, Teams, and other integrations
-- [ ] **ML Prediction:** Predictive capacity modeling
-- [ ] **Custom SLA:** Industry-specific rule engines
-- [ ] **Mobile App:** Native mobile for assignment management
-
----
-
-## What I'm Not Publishing
-
-For client confidentiality and IP protection, I've deliberately omitted:
-
-- Full workflow export and proprietary triage logic
-- Production credentials, tokens, and API keys
-- Internal routing rules and team capacity data
-- Live client data and message history
-- Deployable production configuration
-- Client-specific routing tables and assignment rules
-
-**This is a real client system running v5.1 in production. Enterprise confidentiality applies.**
-
----
-
-## FAQ
-
-**Q: How does the triple-AI failsafe work?**  
-A: GPT-4 attempts classification first; if it fails, Claude takes over; if both fail, regex rules ensure system continues.
-
-**Q: What happens during an AI provider outage?**  
-A: The failsafe cascade automatically switches to backup providers; the team never experiences downtime.
-
-**Q: How accurate is the capacity scoring?**  
-A: Redis provides atomic, real-time scoring with 0.3ms latency for optimal work distribution.
-
-**Q: Is this suitable for large enterprise teams?**  
-A: This is a production system (v5.1) handling enterprise-scale request volumes. Contact for licensing.
-
----
-
-## Contact
-
-**K MD SAYAD RAHMAN** - Sayad.dev | AI Automation
-
-**Work Email:** khandokarsayad@gmail.com  
-**Personal Email:** mdsadrhoman123@gmail.com  
-**LinkedIn:** https://linkedin.com/in/khandokarsabbir  
-**GitHub:** https://github.com/mdsadrhoman123-stack
-
-**Open to Work - Accepting New Automation Projects**
-
-**Email me with your automation challenge - I'll tell you exactly 
-which part I'd automate first, and which part I wouldn't.**
-
----
-
-## See My Other Automation Systems
-
-- [Real Estate AI Automation](../distressed-property-detection) - Property deal detection
-- [M&A Deal-Flow Automation](../edugrow-ma-platform) - M&A advisory systems
-- [Healthcare Document Automation](../medical-document-automation) - Medical records processing
-- [E-commerce Review Automation](../review-outreach-pipeline) - Customer review generation
-
----
-
-<div align="center">
-
-**Built by K MD SAYAD RAHMAN (Sayad.dev | AI Automation)**
-
-**Contact:** khandokarsayad@gmail.com | mdsadrhoman123@gmail.com
-
-Copyright (c) 2024 K MD SAYAD RAHMAN. All rights reserved. Portfolio use only.
-
-*[n8n](https://n8n.io) | [Triple-AI Failsafe](https://openai.com) | [Enterprise Automation](https://linkedin.com/in/khandokarsabbir)*
-
-</div>
