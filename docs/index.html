@@ -29,6 +29,12 @@ header.hero{background:var(--ink);color:#F5F4EF;padding:76px 0 68px;
 header.hero h1{font-size:clamp(38px,6vw,64px);line-height:1.03;margin:0 0 20px}
 header.hero p.promise{font-size:19px;line-height:1.55;color:#C6CFDB;
   max-width:60ch;margin:0 0 30px}
+/* The demo is a single file — someone may well open it with no README in
+   sight, so the provenance has to travel with it. */
+header.hero p.prov{font-size:14px;line-height:1.62;color:#8A94A3;
+  max-width:66ch;margin:24px 0 0;border-left:2px solid #2E3542;
+  padding-left:14px}
+header.hero p.prov b{color:#C6CFDB}
 .meta{display:flex;flex-wrap:wrap;gap:10px}
 .pill{font-size:12px;letter-spacing:.4px;padding:6px 12px;border-radius:999px;
   border:1px solid #2E3542;color:#A9B3C1}
@@ -135,10 +141,15 @@ a{color:var(--green)}
     <h1>FlowDesk</h1>
     <p class="promise">Every request that lands in Slack gets classified, assigned to whoever actually has room, and escalated before the deadline rather than after it.</p>
     <div class="meta">
-      <span class="pill ok">production</span>
+      <span class="pill ok">running on my own n8n</span>
       <span class="pill">Enterprise operations</span>
-      <span class="pill">Built for Enterprise service team</span>
+      <span class="pill">For Enterprise service teams</span>
+      <span class="pill">Ready to deploy</span>
     </div>
+    <p class="prov">Built from a real brief — businesses in this sector post
+    this problem publicly, in their own words, and I built a system for the
+    problem exactly as stated. It is production-grade and runs on my own infrastructure.
+    <b>It has not been sold or deployed into a customer's business: it is available, not delivered.</b></p>
   </div>
 </header>
 
@@ -219,7 +230,7 @@ a{color:var(--green)}
 </footer>
 
 <script>
-var DATA = {"nodes": [{"id": "in", "label": "A request arrives", "kind": "trigger"}, {"id": "read", "label": "Understood and prioritised", "kind": "step"}, {"id": "route", "label": "Sent to whoever has room", "kind": "logic"}, {"id": "done", "label": "Assigned, tracked, on the clock", "kind": "success"}, {"id": "esc", "label": "Escalated before the deadline", "kind": "fail"}], "edges": [{"a": "in", "b": "read"}, {"a": "read", "b": "route"}, {"a": "route", "b": "done"}, {"a": "route", "b": "esc"}], "fails": [{"what": "Primary model down or rate-limited", "detect": "Node error output", "does": "Claude takes over, then a regex tier", "who": "Alert names which tier served it"}, {"what": "Both providers unreachable", "detect": "Second failure in the chain", "does": "Regex classifies, flagged low-confidence", "who": "Lead alerted, request still moves"}, {"what": "Every teammate at capacity", "detect": "Redis capacity score", "does": "Queue and escalate to lead", "who": "Alert, not a silent queue"}, {"what": "Owner never acknowledges", "detect": "Acknowledgement timeout", "does": "Re-escalate rather than wait", "who": "Alert names both owners"}, {"what": "SLA nearing breach", "detect": "Timer threshold", "does": "Escalate while time remains", "who": "Alert states time left"}, {"what": "Slack API rejects a send", "detect": "Node error output", "does": "Retry with backoff, then queue", "who": "Alert with request context"}, {"what": "Redis unavailable", "detect": "Connection error", "does": "Fail closed — hold rather than guess capacity", "who": "Immediate alert"}, {"what": "Anything unanticipated", "detect": "Global error trigger", "does": "Halt that execution, keep state", "who": "Alert with execution ID"}], "journey": [{"h": "A request arrives", "b": "A teammate or client writes in Slack. Nothing new to learn, no form, no portal."}, {"h": "It gets read properly", "b": "Intent and urgency are extracted from the message as written, including in other languages."}, {"h": "It goes to the right person", "b": "Not the nearest person. The one whose live workload has room for it."}, {"h": "The clock starts itself", "b": "An SLA timer attaches at intake, not when someone remembers to start tracking."}, {"h": "It escalates early", "b": "At a set threshold the lead is told while there is still time to act."}, {"h": "The decision is on record", "b": "Assignment, escalation and priority changes are logged with the reasoning behind them."}], "name": "FlowDesk", "eyebrow": "Slack-native intake & execution", "promise": "Every request that lands in Slack gets classified, assigned to whoever actually has room, and escalated before the deadline rather than after it.", "client": "Enterprise service team", "status": "production", "metrics": [["Workflow nodes", "92"], ["Connections", "70"], ["Production versions", "5  (v1 → v5.1)"], ["AI failsafe tiers", "3"]]};
+var DATA = {"nodes": [{"id": "in", "label": "A request arrives", "kind": "trigger"}, {"id": "read", "label": "Understood and prioritised", "kind": "step"}, {"id": "route", "label": "Sent to whoever has room", "kind": "logic"}, {"id": "done", "label": "Assigned, tracked, on the clock", "kind": "success"}, {"id": "esc", "label": "Escalated before the deadline", "kind": "fail"}], "edges": [{"a": "in", "b": "read"}, {"a": "read", "b": "route"}, {"a": "route", "b": "done"}, {"a": "route", "b": "esc"}], "fails": [{"what": "Primary model down or rate-limited", "detect": "Node error output", "does": "Claude takes over, then a regex tier", "who": "Alert names which tier served it"}, {"what": "Both providers unreachable", "detect": "Second failure in the chain", "does": "Regex classifies, flagged low-confidence", "who": "Lead alerted, request still moves"}, {"what": "Every teammate at capacity", "detect": "Redis capacity score", "does": "Queue and escalate to lead", "who": "Alert, not a silent queue"}, {"what": "Owner never acknowledges", "detect": "Acknowledgement timeout", "does": "Re-escalate rather than wait", "who": "Alert names both owners"}, {"what": "SLA nearing breach", "detect": "Timer threshold", "does": "Escalate while time remains", "who": "Alert states time left"}, {"what": "Slack API rejects a send", "detect": "Node error output", "does": "Retry with backoff, then queue", "who": "Alert with request context"}, {"what": "Redis unavailable", "detect": "Connection error", "does": "Fail closed — hold rather than guess capacity", "who": "Immediate alert"}, {"what": "Anything unanticipated", "detect": "Global error trigger", "does": "Halt that execution, keep state", "who": "Alert with execution ID"}], "journey": [{"h": "A request arrives", "b": "A teammate or client writes in Slack. Nothing new to learn, no form, no portal."}, {"h": "It gets read properly", "b": "Intent and urgency are extracted from the message as written, including in other languages."}, {"h": "It goes to the right person", "b": "Not the nearest person. The one whose live workload has room for it."}, {"h": "The clock starts itself", "b": "An SLA timer attaches at intake, not when someone remembers to start tracking."}, {"h": "It escalates early", "b": "At a set threshold the lead is told while there is still time to act."}, {"h": "The decision is on record", "b": "Assignment, escalation and priority changes are logged with the reasoning behind them."}], "name": "FlowDesk", "eyebrow": "Slack-native intake & execution", "promise": "Every request that lands in Slack gets classified, assigned to whoever actually has room, and escalated before the deadline rather than after it.", "audience": "Enterprise service teams", "status": "running on my own n8n", "metrics": [["Workflow nodes", "92"], ["Connections", "70"], ["Production versions", "5  (v1 → v5.1)"], ["AI failsafe tiers", "3"]]};
 
 var flow = document.getElementById('flow');
 DATA.nodes.forEach(function(n, i){

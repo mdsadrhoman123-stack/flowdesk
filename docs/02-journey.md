@@ -1,6 +1,6 @@
-# 02 · The client journey
+# 02 · The journey
 
-What this looks like from the outside, for **Enterprise service team**.
+What this looks like from the outside, for **Enterprise service teams**.
 
 ---
 

@@ -1,6 +1,6 @@
 # 01 · The problem
 
-**FlowDesk** — Enterprise service team
+**FlowDesk** — the problem, as Enterprise service teams describe it
 
 ---
 
@@ -22,4 +22,4 @@ Every incoming message passes through a triage step that classifies intent and u
 
 ---
 
-[← README](../README.md) · [02 · The client journey →](02-journey.md)
+[← README](../README.md) · [02 · The journey →](02-journey.md)
