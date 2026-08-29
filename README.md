@@ -23,7 +23,7 @@
 
 ### On this page
 
-[The problem](#the-problem) · [What changed](#what-changed) · [How it works](#how-it-works) · [When it breaks](#when-it-breaks) · [The stack](#the-stack) · [Limitations](#honest-limitations) · [What is here](#what-is-in-this-repository) · [Read deeper](#read-deeper)
+[The problem](#the-problem) · [What changed](#what-changed) · [How it works](#how-it-works) · [The shape of it](#the-shape-of-the-system) · [When it breaks](#when-it-breaks) · [Why this way](#why-it-is-built-this-way) · [Limitations](#honest-limitations) · [What is here](#what-is-in-this-repository) · [Read deeper](#read-deeper)
 
 ---
 
@@ -113,6 +113,57 @@ Red appears in exactly one role across every repo in this portfolio: where failu
 
 > **Walk it interactively** — [`docs/index.html`](docs/index.html) is a single self-contained page. Download it, open it in any browser, and press **Break it** to watch the failure path light up. Nothing to install, no network calls.
 
+## The shape of the system
+
+Parts and the role each one plays. Not the wiring — no execution order, no prompt text, no thresholds. That is a deliberate line, and the last branch of the tree names exactly what sits on the other side of it.
+
+```text
+FlowDesk — the running system
+│
+├── Interfaces ...................... the systems it talks to
+│   └── Slack API ................... The team was already there — a new tool would have gone unused
+│
+├── Judgement ....................... where a decision or a piece of writing is made
+│   ├── OpenAI GPT-4 ................ Primary classifier for intent and urgency
+│   └── Anthropic Claude ............ Second provider, so one outage cannot take both tiers down
+│
+├── Memory .......................... what is remembered, and for how long
+│   ├── Redis ....................... Capacity is read on every single request, so it has to be fast
+│   └── PostgreSQL .................. Append-only audit history that survives a workflow re-import
+│
+├── Ground .......................... what the whole thing runs on
+│   ├── n8n ......................... Self-hosted, so client conversations never leave their infrastructure
+│   └── Docker ...................... Same stack on every client instance
+│
+├── Failure design .................. 8 paths, designed before the features
+│   ├── detected by ................. an error output, a timer, or a failed connection
+│   ├── handled by .................. falling back, holding, or halting — never guessing
+│   └── announced to ................ a named person, with the reason attached
+│
+└── Not in this repository .......... the part that would let you skip the thinking
+    ├── the node graph .............. which part runs after which, and on what condition
+    ├── the prompts ................. wording, guardrails, the shape of the output
+    ├── the thresholds .............. what counts as urgent, late, at capacity, a match
+    └── the credentials ............. never committed, in any form, at any point
+```
+
+Read it as a set of decisions rather than a parts list. Every part is there because a specific failure or a specific constraint put it there, and the two sections below are the same story told twice: **When it breaks** is what each part is defending against, and **Honest limitations** is what it costs to have chosen that part and not another.
+
+### Counted, not estimated
+
+| | |
+| :--- | :--- |
+| Workflow nodes | **92** |
+| Connections | **70** |
+| Production versions | **5  (v1 → v5.1)** |
+| AI failsafe tiers | **3** |
+
+<sub>These are counts from the built system — nodes, stages, versions, gates. No efficiency percentages are published here without a stated measurement method.</sub>
+
+### Also worth knowing
+
+- Handles requests in multiple languages without a separate translation step.
+
 ## When it breaks
 
 Most automation portfolios show you the happy path. The happy path is the easy half. This is the half that decides whether a system survives contact with a real business.
@@ -130,32 +181,44 @@ Most automation portfolios show you the happy path. The happy path is the easy h
 
 The default on an unhandled condition is to **stop and tell someone** — never to continue on a guess. A silent success is the failure mode that costs the most, because nobody goes looking for it.
 
-## The stack
+## Why it is built this way
 
-| Component | Why this one |
-| :--- | :--- |
-| **n8n** | Self-hosted, so client conversations never leave their infrastructure |
-| **Slack API** | The team was already there — a new tool would have gone unused |
-| **Redis** | Capacity is read on every single request, so it has to be fast |
-| **OpenAI GPT-4** | Primary classifier for intent and urgency |
-| **Anthropic Claude** | Second provider, so one outage cannot take both tiers down |
-| **PostgreSQL** | Append-only audit history that survives a workflow re-import |
-| **Docker** | Same stack on every client instance |
+Three decisions, each with the option that was turned down and the price of turning it down. A choice with no cost attached to it was not a choice — it was a default, and defaults are not worth reading about.
 
-### Counted, not estimated
+<details open>
+<summary><b>Why capacity lives in Redis and not in the audit database</b></summary>
 
-| | |
-| :--- | :--- |
-| Workflow nodes | **92** |
-| Connections | **70** |
-| Production versions | **5  (v1 → v5.1)** |
-| AI failsafe tiers | **3** |
+**What it does.** Capacity is read on every single request, so it sits in Redis where a read costs almost nothing. PostgreSQL holds the audit history, which is written once and read rarely — a completely different access pattern.
 
-<sub>These are counts from the built system — nodes, stages, versions, gates. No efficiency percentages are published here without a stated measurement method.</sub>
+**What was turned down.** One store for both. Fewer moving parts and one less thing to keep alive, but then every capacity read competes with append-only audit writes on the same box, and the read is the one in the hot path.
 
-### Also worth knowing
+**What that costs.** Two stores to operate. When Redis is unavailable the system fails closed — assignment is held rather than guessed at, so an outage delays work instead of misrouting it. That is the right way round, and it is still a delay.
 
-- Handles requests in multiple languages without a separate translation step.
+</details>
+
+<details>
+<summary><b>Why there are two AI providers with a deterministic tier underneath</b></summary>
+
+**What it does.** One provider classifies intent and urgency, a second provider sits behind it on the same contract, and a regex tier sits under both.
+
+**What was turned down.** A single provider with a retry. Retrying is the obvious answer and it does not help at all in the case that matters: when the provider itself is the thing that is down, every retry fails the same way.
+
+**What that costs.** Three paths that have to agree on the same output shape. The bottom tier reads urgency but not scope, so when both providers are unreachable the request keeps moving and a human should review it afterwards.
+
+</details>
+
+<details>
+<summary><b>Why intake is Slack and not a form</b></summary>
+
+**What it does.** Requests are taken where the team already talks, with nothing new to learn.
+
+**What was turned down.** A ticket portal or an intake form. Cleaner, more structured data at the point of entry — and adoption is the entire problem being solved here. A tool nobody opens collects nothing, however good its schema is.
+
+**What that costs.** One workspace per deployment. Multi-workspace is not a setting: it needs a tenant key on every capacity and audit write, not only at intake.
+
+</details>
+
+Every cost above also appears in **Honest limitations** below. It is there twice on purpose: once as the reasoning, once as the consequence, so neither can be quietly dropped from the other.
 
 ## Honest limitations
 
@@ -168,36 +231,40 @@ Every design decision costs something. These are the trade-offs in this build, s
 
 ## What is in this repository
 
+Every file, and the question it answers. Same layout in all eleven repositories in this portfolio, so the second one you open needs no orientation at all.
+
 ```text
 flowdesk/
-├── README.md                      ← you are here
-├── SECURITY.md                    # how to report something that should not be public
-├── NOTICE.md                      # what is withheld, and why
-├── LICENSE                        # covers the documentation, not a software grant
+├── README.md ....................... ← you are here
+├── SECURITY.md ..................... how to report something that should not be public
+├── NOTICE.md ....................... what is withheld, and why
+├── LICENSE ......................... covers the documentation, not a software grant
 │
-├── docs/
-│   ├── index.html                 # the interactive demo — one file, opens with no network
-│   ├── 01-problem.md              # the situation before, in full
-│   ├── 02-journey.md              # step by step, from their side
-│   ├── 03-architecture.md         # the diagrams and the reasoning
-│   ├── 04-failure-handling.md     # every failure path, and where it lands
-│   ├── 05-stack.md                # what was chosen, and what was rejected
-│   ├── 06-results.md              # what is measured, and what is not
-│   └── 07-limitations.md          # the trade-offs, in detail
+├── docs/ ........................... the long form — read in order or not at all
+│   ├── index.html .................. the interactive demo, one file, no network
+│   ├── 01-problem.md ............... the situation before, in full
+│   ├── 02-journey.md ............... step by step, from their side
+│   ├── 03-architecture.md .......... the diagrams, and why they are shaped that way
+│   ├── 04-failure-handling.md ...... every failure path, and where it lands
+│   ├── 05-stack.md ................. each choice, the option turned down, the cost
+│   ├── 06-results.md ............... what is measured, and what is deliberately not
+│   └── 07-limitations.md ........... the trade-offs, in detail
 │
-├── diagrams/
-│   ├── pipeline-lr.mmd            # the client-level flow, left to right
-│   └── pipeline-tb.mmd            # the same flow, top to bottom
+├── diagrams/ ....................... source, so the flow can be re-rendered
+│   ├── pipeline-lr.mmd ............. the client-level flow, left to right
+│   └── pipeline-tb.mmd ............. the same flow, top to bottom
 │
-├── assets/                        # banner and closing card, SVG, no CDN
+├── assets/ ......................... SVG only — nothing loaded from a CDN
+│   ├── banner.svg .................. the header on this page
+│   └── cta.svg ..................... the closing card
 │
-├── workflows/
-│   └── README.md                  # empty on purpose — see below
+├── workflows/ ...................... empty on purpose — see below
+│   └── README.md ................... why it is empty, in writing
 │
-└── .github/
-    ├── honesty-check.py           # the claim linter behind the badge
+└── .github/ ........................ the badge at the top of this page
+    ├── honesty-check.py ............ the claim linter it runs
     └── workflows/
-        └── honesty-check.yml      # runs it on every push
+        └── honesty-check.yml ....... runs it on every push
 ```
 
 There is no `src/` in that tree, and no `workflows/*.json`. That is not an omission — it is the design, and the next section says exactly what is being withheld and why.
